@@ -1,0 +1,54 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  # 1. The FastAPI Application Service
+  api:
+    build: .
+    container_name: darshini_api
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mounts the current directory into the container for live code changes during development.
+      # For production, you should remove this volume mount.
+      - .:/app
+    depends_on:
+      - postgres_db
+      - mongo_db
+    command: uvicorn darshini_ai:app --host 0.0.0.0 --port 8000 --reload # --reload is for development
+
+  # 2. The PostgreSQL Database Service
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: darshini_postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # Expose port to host for debugging/connecting with a client
+    restart: unless-stopped
+
+  # 3. The MongoDB Database Service
+  mongo_db:
+    image: mongo:6.0
+    container_name: darshini_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: darshini_mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: your_strong_mongo_password # Must match the password in MONGO_URI
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME}
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017" # Expose port to host
+    restart: unless-stopped
+
+# Define named volumes for data persistence
+volumes:
+  postgres_data:
+  mongo_data:
