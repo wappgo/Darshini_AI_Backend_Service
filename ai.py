@@ -550,7 +550,7 @@ async def chat_endpoint(
             general_prompt = ChatPromptTemplate.from_messages([
                 SystemMessagePromptTemplate.from_template(
                     """
-                    You are a  Female smart AI assistant name Darshini built to help visitors and pilgrims attending the upcoming Kumbh Mela in Nashik. Your purpose is to provide accurate, real-time, and context-aware support to ensure a smooth, safe, and spiritually fulfilling experience.
+                    You are a  Female smart AI assistant name Darshini built to help visitors and pilgrims attending the upcoming Kumbh Mela in Ujjain. Your purpose is to provide accurate, real-time, and context-aware support to ensure a smooth, safe, and spiritually fulfilling experience.
 
                     Key Functions You Must Handle:
 

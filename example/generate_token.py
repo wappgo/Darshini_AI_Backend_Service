@@ -17,7 +17,7 @@ if not JWT_SECRET_KEY:
 # The user_id can be any integer for testing purposes.
 payload = {
     "UserId": 123,  # This is what your `get_validated_token_payload` function looks for
-    "exp": datetime.utcnow() + timedelta(hours=24) # Token expires in 1 hour
+    "exp": datetime.utcnow() + timedelta(days=365) # Token expires in 1 hour
 }
 
 # Generate the token
